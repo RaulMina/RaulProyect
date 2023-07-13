@@ -11,20 +11,47 @@ class CircuitoController extends Controller
     public function index()
     {
         try {
-        $datos = Circuito::all();
+            if (session()->has('user')) {
+        $datos = Circuito::latest()->paginate(10);
         return view('circuitos.index', compact('datos'));
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
     }
 
+    public function buscar(Request $request)
+    {
+        try{
+    $query = Circuito::query();
 
+    // Aplica los filtros de búsqueda si se proporcionan
+    if ($request->has('filtro_nombre')) {
+        $filtro_nombre = $request->input('filtro_nombre');
+        $query->where('codigo_circuito', 'like', "%$filtro_nombre%");
+    }
+
+    // Continúa agregando más filtros si es necesario
+
+    $datos = $query->latest()->paginate(10);
+
+    return view('circuitos.index', compact('datos'));
+} catch (Exception $e) {
+    return   redirect()->back()->with('error', 'Error al Cargar');
+    }
+   }
 
 
     public function create()
     {
         try {
+            if (session()->has('user')) {
         return view('circuitos.create');
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -33,11 +60,15 @@ class CircuitoController extends Controller
     }
     public function store(Request $request){
         try {
+            if (session()->has('user')) {
        if( Circuito::create($request->all())){
         return   redirect()->back()->with('error', 'Creado con exito');
        }
 
        return   redirect()->back()->with('error', 'Error al Crear');
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -46,8 +77,12 @@ class CircuitoController extends Controller
     public function edit($id)
     {
         try {
+            if (session()->has('user')) {
         $datos = Circuito::findOrFail($id);
         return view('circuitos.edit', compact('datos'));
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -57,11 +92,15 @@ class CircuitoController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if (session()->has('user')) {
         $dato = Circuito::findOrFail($id);
         if($dato->update($request->all())){
             return   redirect()->back()->with('error', 'Actualizado con exito');
         }
         return   redirect()->back()->with('error', 'Error al Actualizar');
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -71,9 +110,13 @@ class CircuitoController extends Controller
     public function destroy($id)
     {
         try {
+            if (session()->has('user')) {
         $dato =  Circuito::findOrFail($id);
         $dato->delete();
         return redirect()->route('circuitos.index');
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }

@@ -1,5 +1,4 @@
 
-
 <!-- DESPLEGANDO TODA LA PLATILLA REALIZADA--->
 @extends('layouts.app')
 
@@ -14,8 +13,19 @@
 <img class="logo_banner"src="../../img/LO1.png" alt="Image 2">
 </center>
 </div>
+<br>
+<form method="POST"  action="{{route('buscarus')}}" >
+    @csrf
+    <div class="form-group">
 
+        <input type="text" name="filtro_nombre" placeholder="Nombre"class="form-control" >
+    </div>
+
+    <!-- Agrega más campos de filtro según tus necesidades -->
+    <button type="submit" class="btn btn-info">Buscar</button>
+</form>
 <a href="{{route('usuarios.create')}} " class="btn btn-primary">Crear Usuario</a>
+
 @if(session('user')->rol==2)
 <div class="container ">
 <table class="table boder_bar btn_modulos">
@@ -60,7 +70,7 @@
     @endforeach
   </tbody>
 </table>
-
+{{ $datos->links() }}
 </div>
 
 @endif

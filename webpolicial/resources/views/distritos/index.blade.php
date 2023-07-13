@@ -15,7 +15,17 @@
 <img class="logo_banner"src="../../img/LO1.png" alt="Image 2">
 </center>
 </div>
+<br>
+<form method="POST"  action="{{route('buscardis')}}" >
+    @csrf
+    <div class="form-group">
 
+        <input type="text" name="filtro_nombre" placeholder="Codigo de Distrito"class="form-control" >
+    </div>
+
+    <!-- Agrega más campos de filtro según tus necesidades -->
+    <button type="submit" class="btn btn-info">Buscar</button>
+</form>
 <a href="{{route('distritos.create')}} " class="btn btn-primary">Crear Distrito</a>
 @if(session('user')->rol==2)
 <div class="container ">
@@ -51,7 +61,7 @@
     @endforeach
   </tbody>
 </table>
-
+{{ $datos->links() }}
 </div>
 @endif
 

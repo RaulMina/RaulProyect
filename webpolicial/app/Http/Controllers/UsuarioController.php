@@ -15,18 +15,40 @@ class UsuarioController extends Controller
     public function Index()
     {
          try {
-            $this->sessionstar();
-                $datos = Usuario::all();
+            if (session()->has('user')) {
+                $datos = Usuario::latest()->paginate(10);
                 return view('usuarios.index', compact('datos'));
 
-
+            }else{
+                return redirect('/');
+            }
           } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
          }
     }
+    public function buscar(Request $request)
+    {
+        try{
+    $query = Usuario::query();
+
+    // Aplica los filtros de búsqueda si se proporcionan
+    if ($request->has('filtro_nombre')) {
+        $filtro_nombre = $request->input('filtro_nombre');
+        $query->where('nombre_apellido', 'like', "%$filtro_nombre%");
+    }
+
+    // Continúa agregando más filtros si es necesario
+
+    $datos = $query->latest()->paginate(10);
+
+    return view('usuarios.index', compact('datos'));
+} catch (Exception $e) {
+    return   redirect()->back()->with('error', 'Error al Cargar');
+    }
+   }
     public  function Sessionstar(){
-        if (empty(session('user'))) {
-            return redirect()->route('home');
+        if (session()->has('user')) {
+            return redirect('/');
         }
     }
   // Esta funcion llama a la vista crear usuarios
@@ -84,7 +106,11 @@ class UsuarioController extends Controller
     public function create()
     {
         try {
+            if (session()->has('user')) {
         return view('usuarios.create');
+        }else{
+            return redirect('/');
+        }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -93,6 +119,7 @@ class UsuarioController extends Controller
     }
     public function store(Request $request){
         try {
+            if (session()->has('user')) {
             $user = new Usuario();
             $user->nombre_apellido =$request->input('nombre_apellido');
             $user->correo =$request->input('correo');
@@ -106,6 +133,9 @@ class UsuarioController extends Controller
 
 
        return   redirect()->back()->with('error', 'Error al Crear');
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -114,8 +144,12 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         try {
+            if (session()->has('user')) {
         $datos = Usuario::findOrFail($id);
         return view('usuarios.edit', compact('datos'));
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -125,22 +159,32 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if (session()->has('user')) {
         $user =Usuario::findOrFail($id);
         $user->nombre_apellido =$request->input('nombre_apellido');
         $user->correo =$request->input('correo');
         $user->usuario =$request->input('usuario');
         $user->rol =$request->input('rol');
         $clave=$request->input('clave');
-        if($user && Hash::check($clave, $user->clave)){
+        if($clave ==$user->clave){
             $user->clave = $request->input('clave');
+            if($user->save()){
+                return   redirect()->back()->with('error', 'Actualizado con exito, Clave no editada');
+            }
         }else{
             $user->clave = Hash::make($request->input('clave'));
+            if($user->save()){
+                return   redirect()->back()->with('error', 'Actualizado con exito Clave editada');
+            }
         }
 
         if($user->save()){
             return   redirect()->back()->with('error', 'Actualizado con exito');
         }
         return   redirect()->back()->with('error', 'Error al Actualizar');
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
@@ -150,9 +194,13 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
         try {
+            if (session()->has('user')) {
         $dato = Usuario::findOrFail($id);
         $dato->delete();
         return redirect()->route('usuarios.index');
+    }else{
+        return redirect('/');
+    }
     } catch (Exception $e) {
         return   redirect()->back()->with('error', 'Error al Cargar');
         }

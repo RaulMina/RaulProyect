@@ -41,13 +41,22 @@
     <a href="{{route('circuitos.index')}}" class="btn_modulos">CIRCUITOS</a>
     </div>
     <div class="col-sm square-button">
-    <a href="" class="btn_modulos">SUBDISTRITOS </a>
+    <a href="{{route('subcircuitos.index')}}" class="btn_modulos">SUBCIRCUITO </a>
     </div>
+    <div class="col-sm square-button">
+        <a href="{{route('vehiculos.index')}}" class="btn_modulos">VEHICULO </a>
+    </div>
+     <div class="col-sm square-button">
+            <a href="{{route('dependencias.index')}}" class="btn_modulos">DEPENDENCIA </a>
+     </div>
+     <div class="col-sm square-button">
+        <a href="{{route('reporte_eventos.index')}}" class="btn_modulos">REPORTES ATC</a>
+ </div>
   <?php }?>
   <?php  if ($user->__get('rol') >= 0)
   {?>
     <div class="col-sm square-button">
-    <a href="distrito" class="btn_modulos">REPORTES</a>
+    <a href="distrito" class="btn_modulos">REPORTES GENERAL</a>
     </div>
     <?php }?>
     <?php  if ($user->__get('rol') >=1)

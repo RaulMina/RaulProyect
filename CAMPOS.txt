@@ -1,0 +1,8 @@
+CAMPOS:
+Circuito*
+Subcircuito*
+Tipo: reclamo o sugerencia*
+Detalle*
+Contacto
+Apellidos*
+Nombres*

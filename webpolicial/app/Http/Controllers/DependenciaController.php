@@ -2,43 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Distrito;
+use App\Models\Dependencia;
+use App\Models\Circuito ;
+use App\Models\Distrito ;
+use App\Models\Subcircuito;
 use Illuminate\Http\Request;
 use Exception;
-use App\Models\Usuario;
-class DsitritoController extends Controller
+class DependenciaController extends Controller
 {
+
     public function index()
     {
         try {
             if (session()->has('user')) {
-        $datos = Distrito::latest()->paginate(10);
-        return view('distritos.index', compact('datos'));
+                $datos = Dependencia::with('Distrito','Circuito','Subcircuito')
+                ->has('Distrito')
+                ->has('Circuito')
+                ->latest()
+                ->has('Subcircuito')->paginate(10);
+        return view('dependencias.index', compact('datos'));
     }else{
         return redirect('/');
     }
-    } catch (Exception $e) {
-        return   redirect()->back()->with('error', 'Error al Cargar');
-        }
+} catch (Exception $e) {
+    return   redirect()->back()->with('error', 'Error al Cargar');
     }
-
+    }
 
     public function buscar(Request $request)
     {
         try{
-    $query = Distrito::query();
+    $query = Dependencia::query();
 
     // Aplica los filtros de búsqueda si se proporcionan
     if ($request->has('filtro_nombre')) {
         $filtro_nombre = $request->input('filtro_nombre');
-        $query->where('codigo_distrito', 'like', "%$filtro_nombre%");
+        $query->where('parroquia', 'like', "%$filtro_nombre%");
     }
 
     // Continúa agregando más filtros si es necesario
 
     $datos = $query->latest()->paginate(10);
 
-    return view('distritos.index', compact('datos'));
+    return view('dependencias.index', compact('datos'));
 } catch (Exception $e) {
     return   redirect()->back()->with('error', 'Error al Cargar');
     }
@@ -48,7 +54,13 @@ class DsitritoController extends Controller
     {
         try {
             if (session()->has('user')) {
-        return view('distritos.create');
+
+        $datos = [
+            'Distrito'=>Distrito::all(),
+            'Circuito'=>Circuito::all(),
+            'Subcircuito'=>Subcircuito::all(),
+            ];
+        return view('dependencias.create', compact('datos'));
     }else{
         return redirect('/');
     }
@@ -61,7 +73,7 @@ class DsitritoController extends Controller
     public function store(Request $request){
         try {
             if (session()->has('user')) {
-       if( Distrito::create($request->all())){
+       if( Dependencia::create($request->all())){
         return   redirect()->back()->with('error', 'Creado con exito');
        }
 
@@ -74,26 +86,32 @@ class DsitritoController extends Controller
         }
     }
 // esta funcion llama a la vista editar
+
     public function edit($id)
     {
         try {
             if (session()->has('user')) {
-        $datos = Distrito::findOrFail($id);
-        return view('distritos.edit', compact('datos'));
-    }else{
-        return redirect('/');
-    }
-    } catch (Exception $e) {
-        return   redirect()->back()->with('error', 'Error al Cargar');
+                $depen = Dependencia::findOrFail($id);
+                $datos = [
+                    'Distrito' => Distrito::all(),
+                    'Circuito' => Circuito::all(),
+                    'Subcircuito' => Subcircuito::all(),
+                ];
+                $matriz = compact('depen', 'datos');
+                return view('dependencias.edit', compact('matriz'));
+            } else {
+                return redirect('/');
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error al cargar');
         }
     }
-
 // esta funcion actualiza los datos en la base d
     public function update(Request $request, $id)
     {
         try {
             if (session()->has('user')) {
-        $dato = Distrito::findOrFail($id);
+        $dato = Dependencia::findOrFail($id);
         if($dato->update($request->all())){
             return   redirect()->back()->with('error', 'Actualizado con exito');
         }
@@ -111,9 +129,9 @@ class DsitritoController extends Controller
     {
         try {
             if (session()->has('user')) {
-        $dato =  Distrito::findOrFail($id);
+        $dato = Dependencia::findOrFail($id);
         $dato->delete();
-        return redirect()->route('distritos.index');
+        return redirect()->route('dependencias.index');
     }else{
         return redirect('/');
     }
@@ -121,6 +139,4 @@ class DsitritoController extends Controller
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
     }
-
-
 }

@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Distrito;
 use Illuminate\Http\Request;
+use App\Models\Vehiculo;
 use Exception;
-use App\Models\Usuario;
-class DsitritoController extends Controller
+class VehiculoController extends Controller
 {
     public function index()
     {
         try {
             if (session()->has('user')) {
-        $datos = Distrito::latest()->paginate(10);
-        return view('distritos.index', compact('datos'));
+        $datos = Vehiculo::latest()->paginate(10);
+        return view('vehiculos.index', compact('datos'));
     }else{
         return redirect('/');
     }
@@ -21,24 +20,22 @@ class DsitritoController extends Controller
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
     }
-
-
     public function buscar(Request $request)
     {
-        try{
-    $query = Distrito::query();
+        try {
+    $query = Vehiculo::query();
 
     // Aplica los filtros de búsqueda si se proporcionan
     if ($request->has('filtro_nombre')) {
         $filtro_nombre = $request->input('filtro_nombre');
-        $query->where('codigo_distrito', 'like', "%$filtro_nombre%");
+        $query->where('placa', 'like', "%$filtro_nombre%");
     }
 
     // Continúa agregando más filtros si es necesario
 
     $datos = $query->latest()->paginate(10);
 
-    return view('distritos.index', compact('datos'));
+    return view('vehiculos.index', compact('datos'));
 } catch (Exception $e) {
     return   redirect()->back()->with('error', 'Error al Cargar');
     }
@@ -48,7 +45,7 @@ class DsitritoController extends Controller
     {
         try {
             if (session()->has('user')) {
-        return view('distritos.create');
+        return view('vehiculos.create');
     }else{
         return redirect('/');
     }
@@ -61,7 +58,7 @@ class DsitritoController extends Controller
     public function store(Request $request){
         try {
             if (session()->has('user')) {
-       if( Distrito::create($request->all())){
+       if( Vehiculo::create($request->all())){
         return   redirect()->back()->with('error', 'Creado con exito');
        }
 
@@ -78,8 +75,8 @@ class DsitritoController extends Controller
     {
         try {
             if (session()->has('user')) {
-        $datos = Distrito::findOrFail($id);
-        return view('distritos.edit', compact('datos'));
+        $datos = Vehiculo::findOrFail($id);
+        return view('vehiculos.edit', compact('datos'));
     }else{
         return redirect('/');
     }
@@ -93,7 +90,7 @@ class DsitritoController extends Controller
     {
         try {
             if (session()->has('user')) {
-        $dato = Distrito::findOrFail($id);
+        $dato = Vehiculo::findOrFail($id);
         if($dato->update($request->all())){
             return   redirect()->back()->with('error', 'Actualizado con exito');
         }
@@ -111,9 +108,9 @@ class DsitritoController extends Controller
     {
         try {
             if (session()->has('user')) {
-        $dato =  Distrito::findOrFail($id);
+        $dato = Vehiculo::findOrFail($id);
         $dato->delete();
-        return redirect()->route('distritos.index');
+        return redirect()->route('vehiculos.index');
     }else{
         return redirect('/');
     }
@@ -121,6 +118,5 @@ class DsitritoController extends Controller
         return   redirect()->back()->with('error', 'Error al Cargar');
         }
     }
-
 
 }

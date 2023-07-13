@@ -105,6 +105,9 @@ background-color: #ffffff;
 border-radius: 10px;
 padding: 10px;
   }
+  .w-5{
+    display:none;
+}
   @media (max-width: 767px) {
     .form_style{
       width:80%;
