@@ -13,8 +13,14 @@ class Circuito extends Model
         'nombre_circuito',
         'codigo_circuito',
         'numero_circuito',
+        'id_parroquia',
         'id_usuario',
     ];
+
+    public function Parroquia()
+  {
+      return $this->belongsTo(Parroquia::class, 'id_parroquia');
+  }
 
     public function usuario()
     {

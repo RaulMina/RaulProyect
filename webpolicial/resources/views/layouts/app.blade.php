@@ -65,7 +65,7 @@
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link click-scroll text-dark"" href="{{route('generarreportes')}}">REPORTAR</a>
+                    <a class="nav-link click-scroll text-dark"" href="{{route('generarreportes')}}">REPORTES</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link click-scroll text-dark"" href="{{route('login')}}">LOGIN</a>

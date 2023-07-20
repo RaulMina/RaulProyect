@@ -64,7 +64,7 @@
                 <td>{{ $dato->Subcircuito['nombre_subcircuito'] }}</td>
                 <td>{{ $dato->Subcircuito['numero_subcircuito'] }}</td>
                 <td>{{ $dato->Subcircuito['codigo_subcircuito'] }}</td>
-                <td>{{ $dato['id_usuario'] }}</td>
+                <td>{{ $dato->Usuario['nombre_apellido'] }}</td>
                 <td><a class="btn btn-primary" href="{{route('dependencias.edit',$dato['id'])}}">Editar</a></td>
                 <td>
                     <form id="deleteForm" action="{{route('dependencias.destroy',$dato['id'])}}" method="POST">

@@ -13,6 +13,10 @@ class DsitritoController extends Controller
         try {
             if (session()->has('user')) {
         $datos = Distrito::latest()->paginate(10);
+        $datos = Distrito::with('Usuario')
+        ->latest()
+        ->has('Usuario')->paginate(10);
+
         return view('distritos.index', compact('datos'));
     }else{
         return redirect('/');

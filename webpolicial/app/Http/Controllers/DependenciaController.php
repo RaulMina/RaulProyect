@@ -6,6 +6,7 @@ use App\Models\Dependencia;
 use App\Models\Circuito ;
 use App\Models\Distrito ;
 use App\Models\Subcircuito;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Exception;
 class DependenciaController extends Controller
@@ -15,9 +16,10 @@ class DependenciaController extends Controller
     {
         try {
             if (session()->has('user')) {
-                $datos = Dependencia::with('Distrito','Circuito','Subcircuito')
+                $datos = Dependencia::with('Distrito','Circuito','Subcircuito','Usuario')
                 ->has('Distrito')
                 ->has('Circuito')
+                ->has('Usuario')
                 ->latest()
                 ->has('Subcircuito')->paginate(10);
         return view('dependencias.index', compact('datos'));

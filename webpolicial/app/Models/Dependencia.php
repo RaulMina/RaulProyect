@@ -14,6 +14,7 @@ class Dependencia extends Model
          'parroquia',
          'id_usuario',
           'id_distrito',
+          'id_parroquia',
           'id_circuito',
           'id_subcircuito',
       ];
@@ -27,6 +28,12 @@ class Dependencia extends Model
   {
       return $this->belongsTo(Distrito::class, 'id_distrito');
   }
+  public function Parroquia()
+  {
+      return $this->belongsTo(Parroquia::class, 'id_parroquia');
+  }
+
+
   public function circuito()
   {
       return $this->belongsTo(Circuito::class, 'id_circuito');

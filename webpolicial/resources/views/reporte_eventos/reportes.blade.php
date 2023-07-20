@@ -21,22 +21,22 @@
         <input type="text" name="filtro_nombre" placeholder="Nombre "class="form-control" >
     </div>
 
-    <!-- Agrega más campos de filtro según tus necesidades -->
+
     <button type="submit" class="btn btn-info">Buscar</button>
 </form>
 <a href="{{route('reporte_eventos.create')}} " class="btn btn-primary">Crear Reporte</a>
 <button onclick="imprimirDiv()" class="btn btn-success">Imprimir Reporte</button>
 
     <script>
-        function imprimirDiv() {
-            var contenidoDiv = document.getElementById("reportid").innerHTML;
-            var ventanaImpresion = window.open('', '', 'width=800,height=600');
-            ventanaImpresion.document.write('<html><head><title>Imprimir Div</title></head><body>');
-            ventanaImpresion.document.write(contenidoDiv);
-            ventanaImpresion.document.write('</body></html>');
-            ventanaImpresion.document.close();
-            ventanaImpresion.print();
-        }
+      //  function imprimirDiv() {
+      //     var contenidoDiv = document.getElementById("reportid").innerHTML;
+      //     var ventanaImpresion = window.open('', '', 'width=800,height=600');
+      //      ventanaImpresion.document.write('<html><head><title>Imprimir Div</title></head><body>');
+      //      ventanaImpresion.document.write(contenidoDiv);
+      //      ventanaImpresion.document.write('</body></html>');
+      //      ventanaImpresion.document.close();
+      //      ventanaImpresion.print();
+      //  }
     </script>
 @if(session('user')->rol==2)
 <div class="container ">
@@ -80,7 +80,7 @@
     </table>
 
 </div>
-
+<a href="{{route('reporte_eventos.index')}}" class="btn btn-defaul">Regresar</a>
 </div>
 @endif
 

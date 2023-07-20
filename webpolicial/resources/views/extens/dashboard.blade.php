@@ -35,19 +35,22 @@
     <a href="{{route('usuarios.index')}}" class="btn_modulos">USUARIOS</a>
     </div>
     <div class="col-sm square-button">
-    <a href="{{route('distritos.index')}}" class="btn_modulos">DISTRITO</a>
+    <a href="{{route('distritos.index')}}" class="btn_modulos">DISTRITOS</a>
     </div>
+    <div class="col-sm square-button">
+        <a href="{{route('parroquias.index')}}" class="btn_modulos">PARROQUIAS</a>
+        </div>
     <div class="col-sm square-button">
     <a href="{{route('circuitos.index')}}" class="btn_modulos">CIRCUITOS</a>
     </div>
     <div class="col-sm square-button">
-    <a href="{{route('subcircuitos.index')}}" class="btn_modulos">SUBCIRCUITO </a>
+    <a href="{{route('subcircuitos.index')}}" class="btn_modulos">SUBCIRCUITOS </a>
     </div>
     <div class="col-sm square-button">
-        <a href="{{route('vehiculos.index')}}" class="btn_modulos">VEHICULO </a>
+        <a href="{{route('vehiculos.index')}}" class="btn_modulos">VEHICULOS </a>
     </div>
      <div class="col-sm square-button">
-            <a href="{{route('dependencias.index')}}" class="btn_modulos">DEPENDENCIA </a>
+            <a href="{{route('dependencias.index')}}" class="btn_modulos">DEPENDENCIAS </a>
      </div>
      <div class="col-sm square-button">
         <a href="{{route('reporte_eventos.index')}}" class="btn_modulos">REPORTES ATC</a>

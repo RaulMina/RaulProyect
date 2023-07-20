@@ -36,7 +36,7 @@
       <th>Nombre de distrito</th>
       <th>Codigo de distrito</th>
       <th>Numero de distrito</th>
-      <th>Id de Usuario que lo creo</th>
+      <th>Usuario </th>
       <th>Editar</th>
       <th>Eliminar</th>
     </tr>
@@ -48,7 +48,7 @@
       <td>{{ $dato['nombre_distrito'] }}</td>
       <td>{{ $dato['codigo_distrito'] }}</td>
       <td>{{ $dato['numero_distrito'] }}</td>
-      <td>{{ $dato['id_usuario'] }}</td>
+      <td>{{ $dato->Usuario['nombre_apellido'] }}</td>
       <td><a  class="btn btn-primary" href="{{route('distritos.edit',$dato['id'])}}">Editar</a></td>
       <td>
         <form id="deleteForm" action="{{route('distritos.destroy',$dato['id'])}}" method="POST">

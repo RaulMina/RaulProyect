@@ -9,6 +9,7 @@ use App\Http\Controllers\SubcircuitoController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\DependenciaController;
 use App\Http\Controllers\Reportes_eventosController;
+use App\Http\Controllers\ParroquiaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,7 +33,7 @@ Route::get('/generarreportes', [Reportes_eventosController::class, 'generarrepor
 Route::post('/registrar_usuario', [UsuarioController::class, 'Registrar_usuario'])->name('registrar_usuario');
 Route::post('/login', [UsuarioController::class, 'Login'])->name('loginuser');
 
-//BUISCAR
+//BUSCAR
 
 Route::post('/buscarvehiculo', [VehiculoController::class, 'buscar'])->name('buscarvh');
 Route::post('/buscarusuario', [UsuarioController::class, 'buscar'])->name('buscarus');
@@ -42,10 +43,12 @@ Route::post('/buscarsubcircuito', [SubcircuitoController::class, 'buscar'])->nam
 Route::post('/buscardependencia', [DependenciaController::class, 'buscar'])->name('buscardep');
 Route::post('/buscarreporte_eventos', [Reportes_eventosController::class, 'buscar'])->name('buscarreport');
 Route::post('/buscarrreportefe', [Reportes_eventosController::class, 'reportes'])->name('buscarrepfech');
+Route::post('/buscarparroquias', [Reportes_eventosController::class, 'reportes'])->name('buscarparroq');
 //RUTAS RESOURCE
 
 Route::resource('/usuarios', UsuarioController::class);
 Route::resource('/distritos', DsitritoController::class);
+Route::resource('/parroquias',ParroquiaController::class);
 Route::resource('/circuitos', CircuitoController::class);
 Route::resource('/subcircuitos', SubcircuitoController::class);
 Route::resource('/vehiculos', VehiculoController::class);
